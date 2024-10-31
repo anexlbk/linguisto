@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/main/icon.png">
+    <link rel="stylesheet" href="style.css">
+    <title>Linguisto Video Chat</title>
+</head>
+<body>
+    <div class="video-chat-container">
+       <div class="img"> <h1><img src="/main/2-removeb.png"></h1></div>
+        <div class="video-box">
+            <video id="remoteVideo" autoplay></video>
+            <video id="localVideo" class="local-video" autoplay muted></video>
+        </div>
+
+        <div id="buttons">
+            <button id="startCallButton" style="background-color: rgb(90, 245, 90); color: black;"><b>Start Call</b></button>
+            <button id="endCallButton" style="background-color: rgb(223, 51, 51);"><b>End Call</b></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

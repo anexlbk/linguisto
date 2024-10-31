@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="/main/icon.png">
+        <title>Sign up</title>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="form-container">
+                <div class="form-body">
+                    <h1 class="welcome text-gray-800 mb-12 mt-4 font-bold"><b><big>Welcome To our Community</big></b></h1>
+                    <h3 class="title mb-8 font-semibold"><small>Sign up with</small></h3>
+                    <div class="social-login">
+                        <ul>
+                            <li class="google"><a href="#">Google</a></li>
+                            <li class="linkedin"><a href="#">LinkedIn</a></li>
+                        </ul>
+                    </div>
+                    <div class="_or">or</div>
+
+                    <form id="signupForm" idaction="" class="the-form">
+                        <label for="full name" style="color: black;" class="text-gray-600">Enter you full name</label>
+                        <input type="full name" name="full name" id="full name" placeholder="full name" required>
+
+                        <label for="email" style="color: black;" class="text-gray-600"> Entre your Email</label>
+                        <input type="email" name="email" id="email" placeholder="Email" required>
+
+                        <label for="password" style="color: black;" class="text-gray-600">Entre your password</label>
+                        <input type="password" name="password" id="password" placeholder="password" aria-required="true" minlength="8">
+
+                        <label for="language-pairs" style="color: black;" class="text-gray-600">Entre your language pairs</label>
+                        <input type="text" name="language-pairs" id="language-pairs" placeholder="language-pairs" required>
+
+                        <label for="translation-expertise" style="color: black;" class="text-gray-600">Drop your CV</label>
+                        <input type="file" name="cv" id="cv" placeholder="CV" required>
+
+                        <label for="portfolio" style="color: black;" class="text-gray-600">Drop your portfolio</label>
+                        <input type="file url" name="portfolio" id="portfolio" placeholder="portfolio" required>
+
+                        <div class="privacy-policy">
+                            <input type="checkbox" id="privacy-check" name="privacy-check">
+                            <label for="privacy-check" aria-required="true">
+                              <span class="text-black">Yes, I have read</span> <a href="privacy-terms.html">Linguisto Privacy Policy</a>.
+                            </label>
+                          </div>                                                   
+
+                        <hr>
+
+                        <input type="submit" style="font-weight: bold;" value="Sign up">
+                    </form>
+                    <div class="form-footer">
+                        <div>
+                            <span class="font-bold"><b>Have an account?</b></span> <a href="/HTML-CSS-login-page-template/index.html">Login</a>
+                        </div>
+                    </div>
+                </div>
+        
+     <script src="script.js"></script>
+    </body>
+</html>
