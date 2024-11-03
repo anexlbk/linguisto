@@ -1,0 +1,19 @@
+{
+    "name": "linguisto-backend",
+    "version": "1.0.0",
+    "description": "Backend for Linguisto translation marketplace",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^5.11.15",
+      "bcryptjs": "^2.4.3",
+      "jsonwebtoken": "^8.5.1",
+      "dotenv": "^8.2.0"
+    },
+    "author": "Your Name",
+    "license": "ISC"
+  }
+  
