@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Page</title>
+    <link rel="stylesheet" href="/translator-dashboeard/assets/css/setting.css">
+    <link rel="icon" href="/main/icon.png">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="sidebar">
+            <ul>
+                <li class="tab-link active" data-tab="profile">Profile</li>
+                <li class="tab-link" data-tab="account">Account</li>
+                <li class="tab-link" data-tab="chat">Chat</li>
+                <li class="tab-link" data-tab="voice-video">Voice & Video</li>
+                <li class="tab-link" data-tab="appearance">Appearance</li>
+                <li class="tab-link" data-tab="notification">Notification</li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <h2>Settings</h2>
+            
+            <!-- Profile Section -->
+            <div class="tab-content active" id="profile">
+                <div class="profile-pic">
+                    <img src="#" alt="pfp">
+                    <h3>Profile picture</h3>
+                    <button class="change-btn">
+                        <img src="/translator-dashboeard/assets/images/icon/upload-icon.png" alt="Upload-icon" class="upload-icon">
+                        Upload</button>
+                    <button class="delete-btn">
+                        <img src="/translator-dashboeard/assets/images/icon/delete.png" alt="delete-btn" class="delete">
+                    </button>
+                </div>
+                    <div class="name-section">
+                        <div class="content">
+                        <label class="label">Name</label>
+                        <span class="name">Anes Lbk</span>
+                    </div>
+                        <button class="edit-button">Edit</button>
+                    </div>
+                <div class="name-section">
+                    <div class="content">
+                    <label class="label">Username</label>
+                    <span id="username" class="name">username</span>
+                    </div>
+                    <button class="edit-button">Edit</button>
+                </div>
+                <div class="name-section">
+                    <div class="content">
+                    <label class="label">Address Email</label>
+                    <span id="address-email" class="name">email@gmail.com</span>
+                    </div>
+                    <button class="edit-button">Edit</button>
+                </div>
+                <div class="name-section">
+                    <div class="content">
+                    <label class="label">Portfolio</label>
+                    <span id="portfolio" class="name">https://port</span>
+                    </div>
+                    <button class="edit-button">Edit</button>
+                </div>
+                <div class="name-section">
+                    <div class="content">
+                    <label class="label">About me</label>
+                    <span id="about" class="name">about text</span>
+                    </div>
+                    <button class="edit-button">Edit</button>
+                <button class="save-btn">Save changes</button>
+            </div>
+
+            <!-- Account Section -->
+            <div class="tab-content" id="account">
+                <h3>Account Settings</h3>
+            </div>
+
+            <!-- Chat Section -->
+            <div class="tab-content" id="chat">
+                <h3>Chat Settings</h3>
+            </div>
+
+            <!-- Voice & Video Section -->
+            <div class="tab-content" id="voice-video">
+                <h3>Voice & Video Settings</h3>
+                <button id="accessButton">Allow camera and microphone</button>
+            </div>
+
+            <!-- Appearance Section -->
+            <div class="tab-content" id="appearance">
+                <h3>Appearance Settings</h3>
+            </div>
+
+            <!-- Notification Section -->
+            <div class="tab-content" id="notification">
+                <h3>Notification Settings</h3>
+            </div>
+        </div>
+    </div>
+
+    <script src="/translator-dashboeard/assets/js/setting.js"></script>
+</body>
+</html>

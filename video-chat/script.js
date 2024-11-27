@@ -1,66 +1,99 @@
 let localStream;
 let remoteStream;
 let peerConnection;
+let wsConnection;
 
-const servers = {
+const config = {
+    wsUrl: window.location.hostname === 'localhost' ? 
+           'ws://localhost:8080/ws' : 
+           'wss://' + window.location.host + '/ws',
     iceServers: [
-        { urls: 'stun:stun.l.google.com:19302' },  // Free STUN server provided by Google
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:stun1.l.google.com:19302' }
     ]
 };
 
-const localVideo = document.getElementById('localVideo');
-const remoteVideo = document.getElementById('remoteVideo');
-const startCallButton = document.getElementById('startCallButton');
-const endCallButton = document.getElementById('endCallButton');
+function connectWebSocket() {
+    wsConnection = new WebSocket(config.wsUrl);
+    
+    wsConnection.onopen = () => {
+        console.log('WebSocket connected');
+        updateUIState('connected');
+    };
 
-startCallButton.addEventListener('click', startCall);
-endCallButton.addEventListener('click', endCall);
+    wsConnection.onclose = () => {
+        console.log('WebSocket disconnected');
+        updateUIState('disconnected');
+        // Attempt to reconnect after 5 seconds
+        setTimeout(connectWebSocket, 5000);
+    };
+
+    wsConnection.onmessage = async function(event) {
+        try {
+            const message = JSON.parse(event.data);
+            handleSignalingMessage(message);
+        } catch (error) {
+            console.error('Error handling message:', error);
+        }
+    };
+}
 
 async function startCall() {
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        // Update UI to show loading state
+        updateUIState('connecting');
+        
+        // Request media permissions
+        localStream = await navigator.mediaDevices.getUserMedia({ 
+            video: true, 
+            audio: true 
+        });
+        
         localVideo.srcObject = localStream;
 
-        // Create a peer connection
-        peerConnection = new RTCPeerConnection(servers);
-
-        // Add local stream tracks to peer connection
-        localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
-
-        // When remote stream is added, show it in remote video
-        peerConnection.ontrack = event => {
-            if (!remoteStream) {
-                remoteStream = new MediaStream();
-                remoteVideo.srcObject = remoteStream;
-            }
-            remoteStream.addTrack(event.track);
-        };
-
-        // Handle ICE candidates
-        peerConnection.onicecandidate = event => {
-            if (event.candidate) {
-                // Send ICE candidate to the remote peer (handled by your signaling server)
-                console.log('New ICE candidate:', event.candidate);
-            }
-        };
-
-        // Create offer and set local description
+        // Create and configure peer connection
+        peerConnection = new RTCPeerConnection({ iceServers: config.iceServers });
+        
+        // Add tracks and set up handlers
+        setupPeerConnection();
+        
+        // Create and send offer
         const offer = await peerConnection.createOffer();
         await peerConnection.setLocalDescription(offer);
+        
+        sendSignalingMessage({
+            type: 'offer',
+            offer: offer
+        });
 
-        console.log('Offer created:', offer);
-
-        // Here you'd send the offer to the remote peer using your signaling server
+        updateUIState('incall');
     } catch (error) {
-        console.error('Error accessing media devices.', error);
+        console.error('Error starting call:', error);
+        updateUIState('error');
+        showError('Could not access camera/microphone. Please check permissions.');
     }
 }
 
-function endCall() {
-    if (peerConnection) {
-        peerConnection.close();
-        peerConnection = null;
-        localVideo.srcObject = null;
-        remoteVideo.srcObject = null;
+function updateUIState(state) {
+    const startButton = document.getElementById('startCallButton');
+    const endButton = document.getElementById('endCallButton');
+    
+    switch(state) {
+        case 'connecting':
+            startButton.disabled = true;
+            startButton.textContent = 'Connecting...';
+            break;
+        case 'incall':
+            startButton.style.display = 'none';
+            endButton.style.display = 'block';
+            break;
+        case 'error':
+            startButton.disabled = false;
+            startButton.textContent = 'Retry Call';
+            break;
+        default:
+            startButton.disabled = false;
+            startButton.textContent = 'Start Call';
+            endButton.style.display = 'none';
     }
 }

@@ -69,6 +69,8 @@
         <button type="button" id="submit-button" onclick="handleSubmit()">Submit</button>
     </div>
 
+    <div id="error-message" class="error-message" style="display: none;"></div>
+
     <script>
         function updateCard() {
             // Get the values from the input fields
@@ -101,6 +103,107 @@
         function unflipCard() {
             document.getElementById("card").classList.remove("flip");
         }
+
+        function handleSubmit() {
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const name = document.getElementById('name').value;
+            const cvv = document.getElementById('cvv').value;
+            const month = document.getElementById('expiry-month').value;
+            const year = document.getElementById('expiry-year').value;
+
+            // Reset error states
+            clearErrors();
+            
+            // Validate inputs
+            if (!validateCard()) {
+                return;
+            }
+
+            // Here you would normally send to payment processor
+            // For demo, just show success
+            showSuccess();
+        }
+
+        function validateCard() {
+            let isValid = true;
+            const errors = [];
+
+            // Luhn algorithm for card number validation
+            if (!luhnCheck(cardNumber)) {
+                errors.push('Invalid card number');
+                isValid = false;
+            }
+
+            if (!/^\d{3}$/.test(cvv)) {
+                errors.push('Invalid CVV');
+                isValid = false;
+            }
+
+            if (!name.trim()) {
+                errors.push('Name is required');
+                isValid = false;
+            }
+
+            if (!month || !year) {
+                errors.push('Expiration date is required');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                showError(errors.join('\n'));
+            }
+
+            return isValid;
+        }
+
+        function luhnCheck(cardNumber) {
+            let sum = 0;
+            let isEven = false;
+            
+            // Loop through values starting from the rightmost side
+            for (let i = cardNumber.length - 1; i >= 0; i--) {
+                let digit = parseInt(cardNumber.charAt(i));
+
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+
+                sum += digit;
+                isEven = !isEven;
+            }
+
+            return (sum % 10) === 0;
+        }
+
+        // Add these styles to your CSS file
+        const styles = `
+            .error-message {
+                color: #dc3545;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                background-color: #f8d7da;
+                border: 1px solid #f5c6cb;
+                display: none;
+            }
+            
+            .success-message {
+                color: #28a745;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 4px;
+                background-color: #d4edda;
+                border: 1px solid #c3e6cb;
+                display: none;
+            }
+        `;
+
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = styles;
+        document.head.appendChild(styleSheet);
     </script>
 
 </body>
